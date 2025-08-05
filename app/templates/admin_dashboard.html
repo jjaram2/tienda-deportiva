@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Tienda Deportiva</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Deportiva</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/categorias">Categorías</a>
+            <a href="/carrito">Carrito</a>
+            {% if current_user.is_authenticated %}
+                <a href="/logout" style="color:#d32f2f;font-weight:bold;">Cerrar sesión</a>
+            {% else %}
+                <a href="/login">Ingresar</a>
+                <a href="/register">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <h2>Panel de administración</h2>
+        <h3>Usuarios</h3>
+        <table style="width:100%;background:#fff;border-radius:8px;overflow:hidden;">
+            <tr style="background:#f5f5f5;">
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.idUser }}</td>
+                <td>{{ user.nameUser }}</td>
+                <td>{{ user.role }}</td>
+                <td>
+                    <form method="post" action="/admin/cambiar_rol/{{ user.idUser }}" style="display:inline;">
+                        <select name="nuevo_rol">
+                            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                            <option value="vendedor" {% if user.role == 'vendedor' %}selected{% endif %}>Vendedor</option>
+                            <option value="usuario" {% if user.role == 'usuario' %}selected{% endif %}>Usuario</option>
+                            <option value="proveedor" {% if user.role == 'proveedor' %}selected{% endif %}>Proveedor</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary" style="padding:2px 8px;">Cambiar rol</button>
+                    </form>
+                    <a href="/admin/bloquear/{{ user.idUser }}" class="btn btn-primary" style="background:#d32f2f;padding:2px 8px;">Bloquear</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <h3 style="margin-top:40px;">Pedidos de proveedores</h3>
+        <!-- Aquí puedes listar pedidos pendientes y botón para aceptar -->
+        <ul>
+            <li>Pedido #1 <a href="/admin/aceptar_pedido/1" class="btn btn-primary">Aceptar</a></li>
+            <li>Pedido #2 <a href="/admin/aceptar_pedido/2" class="btn btn-primary">Aceptar</a></li>
+        </ul>
+    </main>
+    <footer>
+        <a href="/faq">Preguntas frecuentes</a> |
+        <a href="/devoluciones">Devoluciones</a> |
+        <a href="/contacto">Contacto</a>
+        <p>&copy; 2025 Tienda Deportiva</p>
+    </footer>
+</body>
+</html>

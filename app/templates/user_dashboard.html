@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi cuenta - Tienda Deportiva</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Deportiva</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/categorias">Categorías</a>
+            <a href="/carrito">Carrito</a>
+            {% if current_user.is_authenticated %}
+                <a href="/logout" style="color:#d32f2f;font-weight:bold;">Cerrar sesión</a>
+            {% else %}
+                <a href="/login">Ingresar</a>
+                <a href="/register">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <h2>Mi cuenta</h2>
+        <ul>
+            <li><a href="/mis-compras">Historial de compras</a></li>
+            <li><a href="/mis-datos">Datos personales</a></li>
+            <li><a href="/logout">Cerrar sesión</a></li>
+        </ul>
+    </main>
+    <footer>
+        <a href="/faq">Preguntas frecuentes</a> |
+        <a href="/devoluciones">Devoluciones</a> |
+        <a href="/contacto">Contacto</a>
+        <p>&copy; 2025 Tienda Deportiva</p>
+    </footer>
+</body>
+</html>

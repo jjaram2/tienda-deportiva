@@ -1,0 +1,58 @@
+<!-- carrito.html - Carrito de compras -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito - Tienda Deportiva</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Tienda Deportiva</h1>
+        <nav>
+            <a href="/">Inicio</a>
+            <a href="/categorias">Categorías</a>
+            <a href="/carrito">Carrito</a>
+            {% if current_user.is_authenticated %}
+                <a href="/logout" style="color:#d32f2f;font-weight:bold;">Cerrar sesión</a>
+            {% else %}
+                <a href="/login">Ingresar</a>
+                <a href="/register">Registrarse</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <h2>Carrito de compras</h2>
+        {% if carrito %}
+        <table style="width:100%;background:#fff;border-radius:8px;overflow:hidden;">
+            <tr style="background:#f5f5f5;">
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Total</th>
+                <th>Acción</th>
+            </tr>
+            {% for item in carrito %}
+            <tr>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>${{ item.precio }}</td>
+                <td>${{ item.precio * item.cantidad }}</td>
+                <td><a href="/carrito/eliminar/{{ item.id }}" style="color:#d32f2f;">Eliminar</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <p style="margin-top:20px;"><strong>Total: ${{ total }}</strong></p>
+        <a href="/checkout" class="btn btn-primary">Proceder al pago</a>
+        {% else %}
+        <p>Tu carrito está vacío.</p>
+        {% endif %}
+    </main>
+    <footer>
+        <a href="/faq">Preguntas frecuentes</a> |
+        <a href="/devoluciones">Devoluciones</a> |
+        <a href="/contacto">Contacto</a>
+        <p>&copy; 2025 Tienda Deportiva</p>
+    </footer>
+</body>
+</html>
